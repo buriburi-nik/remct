@@ -1,8 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export default function Nav({ onLogout }) {
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+export default function Nav({ onLogout, user }) {
+  // Make sure we have a user object, even if it's empty
+  const userData = user || {};
   
   return (
     <nav className="nav-bar">
@@ -24,7 +25,7 @@ export default function Nav({ onLogout }) {
         </div>
         <div className="user-actions">
           <span style={{ color: 'white', marginRight: '1rem' }}>
-            {user.name}
+            {userData.name || 'User'}
           </span>
           <button onClick={onLogout}>Logout</button>
         </div>

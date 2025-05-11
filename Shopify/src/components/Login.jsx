@@ -40,17 +40,23 @@ export default function Login({ onLogin }) {
     
     // Simulate API call with timeout
     setTimeout(() => {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        const stored = JSON.parse(storedUser);
-        if (form.email === stored.email && form.password === stored.password) {
-          onLogin();
-          navigate('/home');
+      try {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          const parsed = JSON.parse(storedUser);
+          if (form.email === parsed.email && form.password === parsed.password) {
+            // Valid login
+            onLogin();
+            navigate('/home');
+          } else {
+            setErrors({ auth: 'Invalid email or password' });
+          }
         } else {
-          setErrors({ auth: 'Invalid email or password' });
+          setErrors({ auth: 'No account found. Please sign up.' });
         }
-      } else {
-        setErrors({ auth: 'No account found. Please sign up.' });
+      } catch (error) {
+        console.error("Login error:", error);
+        setErrors({ auth: 'An error occurred. Please try again.' });
       }
       setIsSubmitting(false);
     }, 1000);

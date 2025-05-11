@@ -12,27 +12,46 @@ import ContactUs from './components/ContactUs';
 export default function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
   // Check authentication status on component mount and route changes
   useEffect(() => {
     const checkAuth = () => {
-      const user = localStorage.getItem('user');
-      setAuthenticated(!!user);
+      try {
+        const userData = localStorage.getItem('user');
+        if (userData) {
+          const parsedUser = JSON.parse(userData);
+          setUser(parsedUser);
+          setAuthenticated(true);
+        } else {
+          setUser(null);
+          setAuthenticated(false);
+        }
+      } catch (error) {
+        console.error("Auth check error:", error);
+        setUser(null);
+        setAuthenticated(false);
+      }
       setLoading(false);
     };
 
     checkAuth();
-  }, [location]);
+  }, [location.pathname]);
 
   const handleLogin = () => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
     setAuthenticated(true);
     navigate('/home');
   };
 
   const handleLogout = () => {
     localStorage.removeItem('user');
+    setUser(null);
     setAuthenticated(false);
     navigate('/');
   };
@@ -53,7 +72,7 @@ export default function App() {
 
   return (
     <>
-      {authenticated && <Nav onLogout={handleLogout} />}
+      {authenticated && <Nav onLogout={handleLogout} user={user} />}
       
       <Routes>
         <Route path="/" element={
@@ -66,7 +85,7 @@ export default function App() {
 
         <Route path="/home" element={
           <ProtectedRoute>
-            <Home />
+            <Home user={user} />
           </ProtectedRoute>
         } />
         

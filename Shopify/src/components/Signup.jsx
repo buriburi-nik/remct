@@ -11,10 +11,25 @@ export default function Signup({ onSignup }) {
 
   const validate = () => {
     const e = {};
-    if (!form.name.trim()) e.name = 'Name required';
-    if (!emailRegex.test(form.email)) e.email = 'Valid email required';
-    if (form.password.length < 6) e.password = 'Min 6 chars';
-    if (form.confirm !== form.password) e.confirm = 'Must match password';
+    if (!form.name.trim()) e.name = 'Name is required';
+    if (!form.email.trim()) {
+      e.email = 'Email is required';
+    } else if (!emailRegex.test(form.email)) {
+      e.email = 'Please enter a valid email address';
+    }
+    
+    if (!form.password) {
+      e.password = 'Password is required';
+    } else if (form.password.length < 6) {
+      e.password = 'Password must be at least 6 characters';
+    }
+    
+    if (!form.confirm) {
+      e.confirm = 'Please confirm your password';
+    } else if (form.confirm !== form.password) {
+      e.confirm = 'Passwords must match';
+    }
+    
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -34,13 +49,21 @@ export default function Signup({ onSignup }) {
     
     // Simulate API call with timeout
     setTimeout(() => {
-      localStorage.setItem('user', JSON.stringify({
-        name: form.name,
-        email: form.email,
-        password: form.password
-      }));
-      onSignup();
-      navigate('/home');
+      try {
+        // Store user data in localStorage
+        const userData = {
+          name: form.name,
+          email: form.email,
+          password: form.password
+        };
+        
+        localStorage.setItem('user', JSON.stringify(userData));
+        onSignup();
+        navigate('/home');
+      } catch (error) {
+        console.error("Signup error:", error);
+        setErrors({ general: 'An error occurred. Please try again.' });
+      }
       setIsSubmitting(false);
     }, 1000);
   };
@@ -105,6 +128,8 @@ export default function Signup({ onSignup }) {
             />
             {errors.confirm && <div className="error">{errors.confirm}</div>}
           </div>
+          
+          {errors.general && <div className="error">{errors.general}</div>}
           
           <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Creating Account...' : 'Sign Up'}
