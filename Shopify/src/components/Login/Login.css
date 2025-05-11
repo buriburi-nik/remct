@@ -1,0 +1,110 @@
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px);
+  padding: var(--spacing-lg);
+  background: radial-gradient(ellipse at top, rgba(236, 242, 255, 0.5), transparent),
+              radial-gradient(ellipse at bottom, rgba(224, 231, 255, 0.5), transparent);
+}
+
+.form-container {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--glass-shadow), 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(45deg);
+  animation: shine 6s infinite linear;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+.form-container h2 {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+  font-size: 1.75rem;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.form-container button[type="submit"] {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 0.875rem;
+  border-radius: var(--radius-md);
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: var(--spacing-md);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-container button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: all 0.6s ease;
+}
+
+.form-container button[type="submit"]:hover::before {
+  left: 100%;
+}
+
+.form-container button[type="submit"]:hover {
+  box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+}
+
+.form-container button[type="submit"]:disabled {
+  background: #a5b4fc;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 480px) {
+  .form-container {
+    padding: var(--spacing-lg);
+  }
+  
+  .form-container h2 {
+    font-size: 1.5rem;
+  }
+}

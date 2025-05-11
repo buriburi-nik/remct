@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import Nav from './components/Nav';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Home from './components/Home';
+import Nav from './components/Nav/Nav.jsx';
+import Login from './components/Login/Login.jsx';
+import Signup from './components/Signup/Signup.jsx';
+import Home from './components/Home/Home.jsx';
 import Products from './components/Products';
 import ProductDetails from './components/ProductDetails';
 import Cart from './components/Cart';
