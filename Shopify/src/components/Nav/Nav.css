@@ -1,4 +1,3 @@
-
 /* Nav.css */
 
 .nav-bar {
@@ -101,6 +100,7 @@
   border: none;
   color: white;
   font-size: 1.5rem;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
@@ -111,25 +111,46 @@
     right: 0;
     background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
     flex-direction: column;
+    align-items: center;
     padding: var(--spacing-lg);
     gap: var(--spacing-md);
     transform: translateY(-100%);
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
     visibility: hidden;
+    z-index: 999;
   }
-  
+
   .nav-links.open {
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
   }
-  
+
   .mobile-menu-btn {
     display: block;
   }
-  
+
   .nav-container {
     padding: 0.75rem var(--spacing-md);
+  }
+
+  .user-actions {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .nav-brand {
+    font-size: 1.25rem;
+    padding-right: var(--spacing-sm);
+  }
+
+  .mobile-menu-btn {
+    font-size: 1.25rem;
+  }
+
+  .nav-links a {
+    font-size: 0.95rem;
   }
 }

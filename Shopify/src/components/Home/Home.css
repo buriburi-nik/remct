@@ -403,4 +403,81 @@
 
 .action-card:hover .action-title {
   color: var(--primary);
-}   
+}   /* -------------------- Responsive Media Queries -------------------- */
+
+@media (max-width: 1024px) {
+  .dashboard {
+    padding: 1.5rem;
+  }
+
+  .welcome-section h1 {
+    font-size: 1.75rem;
+  }
+
+  .stat-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.25rem;
+  }
+
+  .stat-icon {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-sections {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+
+  .product-image-mini {
+    height: 110px;
+  }
+
+  .product-title-mini {
+    font-size: 0.85rem;
+  }
+
+  .product-price-mini {
+    font-size: 0.95rem;
+  }
+
+  .quick-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: 1rem;
+  }
+
+  .welcome-section h1 {
+    font-size: 1.5rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .section {
+    padding: 1.25rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .product-info-mini {
+    padding: 0.75rem;
+  }
+
+  .product-title-mini {
+    -webkit-line-clamp: 1;
+  }
+}

@@ -61,7 +61,7 @@ a {
 }
 
 a:hover {
-  color: var(--secondary-color);
+  color: var(--warning-color);
 }
 
 button {

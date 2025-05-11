@@ -188,3 +188,30 @@
     font-size: 1.5rem;
   }
 }
+@media screen and (max-width: 480px) {
+  .back-button {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .product-details-info h2 {
+    font-size: 1.25rem;
+  }
+
+  .product-details-price {
+    font-size: 1.25rem;
+  }
+
+  .rating-stars {
+    font-size: 1rem;
+  }
+
+  .product-details-description {
+    font-size: 0.95rem;
+  }
+
+  .product-details-actions button {
+    font-size: 0.95rem;
+    padding: 0.65rem 1rem;
+  }
+}

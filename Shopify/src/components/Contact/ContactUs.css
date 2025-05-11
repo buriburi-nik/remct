@@ -190,3 +190,102 @@
     padding: var(--spacing-lg);
   }
 }
+
+/* ---------------------------------------
+   Responsive Enhancements for Contact Page
+---------------------------------------- */
+
+/* Small mobile devices (max-width: 480px) */
+@media screen and (max-width: 480px) {
+  .contact-container {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .contact-form {
+    padding: var(--spacing-md);
+  }
+
+  .contact-form h2 {
+    font-size: 1.25rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 0.95rem;
+    padding: 0.65rem;
+  }
+
+  .contact-button {
+    font-size: 0.95rem;
+    padding: 0.65rem;
+  }
+
+  .success-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+}
+
+/* Tablets (max-width: 768px) */
+@media screen and (max-width: 768px) {
+  .contact-container {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+
+  .contact-form {
+    padding: var(--spacing-xl);
+  }
+
+  .contact-button {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 1rem;
+  }
+}
+
+/* Large screens (min-width: 1200px) */
+@media screen and (min-width: 1200px) {
+  .contact-container {
+    max-width: 800px;
+  }
+
+  .contact-form {
+    padding: var(--spacing-2xl);
+  }
+
+  .contact-form h2 {
+    font-size: 2rem;
+  }
+
+  .contact-button {
+    font-size: 1.1rem;
+  }
+}
+
+/* Landscape mode adjustments */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .contact-form {
+    padding: var(--spacing-md);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.65rem;
+  }
+}
+
+/* Accessibility: Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

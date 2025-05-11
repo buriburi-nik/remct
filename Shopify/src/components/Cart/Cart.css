@@ -306,3 +306,129 @@
     margin-bottom: var(--spacing-sm);
   }
 }
+
+/* -------------------------------
+   Responsive Styles
+-------------------------------- */
+
+/* Small mobile devices (max-width: 480px) */
+@media screen and (max-width: 480px) {
+  .cart-container {
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm);
+  }
+
+  .cart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  .cart-header h2 {
+    font-size: 1.4rem;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .cart-item {
+    grid-template-columns: 50px 1fr;
+    gap: var(--spacing-sm);
+  }
+
+  .cart-item-image {
+    width: 45px;
+    height: 45px;
+  }
+
+  .cart-item-title {
+    font-size: 0.95rem;
+  }
+
+  .cart-total {
+    font-size: 1.2rem;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .btn-checkout,
+  .btn-clear-cart {
+    width: 100%;
+    margin-bottom: var(--spacing-xs);
+  }
+}
+
+/* Tablets and small desktops (max-width: 768px) */
+@media screen and (max-width: 768px) {
+  .cart-container {
+    padding: var(--spacing-lg);
+    margin: var(--spacing-md);
+  }
+
+  .cart-item {
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .cart-item-image {
+    width: 50px;
+    height: 50px;
+    grid-row: span 2;
+  }
+
+  .cart-item-remove {
+    grid-column: 2;
+    justify-self: flex-start;
+    padding: var(--spacing-xs) 0;
+  }
+
+  .cart-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cart-total {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .btn-checkout,
+  .btn-clear-cart {
+    width: 100%;
+  }
+}
+
+/* Large desktops (min-width: 1200px) */
+@media screen and (min-width: 1200px) {
+  .cart-container {
+    max-width: 1000px;
+    padding: var(--spacing-2xl);
+  }
+
+  .cart-item-title {
+    font-size: 1.2rem;
+  }
+
+  .cart-total {
+    font-size: 1.8rem;
+  }
+}
+
+/* Landscape orientation tweaks */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .cart-container {
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm);
+  }
+}
+
+/* Accessibility: Reduce motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -238,4 +238,48 @@
   .product-image {
     height: 150px;
   }
+}@media screen and (max-width: 480px) {
+  .products-page {
+    padding: var(--spacing-md);
+  }
+
+  .sidebar h3 {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .sidebar button {
+    font-size: 0.875rem;
+    padding: var(--spacing-sm);
+  }
+
+  .product-title {
+    font-size: 0.95rem;
+  }
+
+  .product-price {
+    font-size: 1rem;
+  }
+
+  .product-rating {
+    font-size: 0.75rem;
+  }
+
+  .product-image {
+    height: 130px;
+    padding: var(--spacing-sm);
+  }
+
+  .products-grid {
+    gap: var(--spacing-sm);
+  }
+
+  .loading-spinner {
+    width: 30px;
+    height: 30px;
+  }
+
+  .empty-state-icon {
+    font-size: 2.25rem;
+  }
 }

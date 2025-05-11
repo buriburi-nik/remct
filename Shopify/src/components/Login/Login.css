@@ -107,4 +107,49 @@
   .form-container h2 {
     font-size: 1.5rem;
   }
+}@media screen and (max-width: 768px) {
+  .login-page {
+    padding: var(--spacing-md);
+  }
+
+  .form-container {
+    width: 100%;
+    max-width: 90%;
+    padding: var(--spacing-lg);
+  }
+
+  .form-container h2 {
+    font-size: 1.6rem;
+  }
+
+  .form-container button[type="submit"] {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .login-page {
+    flex-direction: column;
+    padding: var(--spacing-md);
+  }
+
+  .form-container {
+    width: 100%;
+    max-width: 100%;
+    padding: var(--spacing-md);
+  }
+
+  .form-container h2 {
+    font-size: 1.4rem;
+  }
+
+  .form-container form {
+    gap: var(--spacing-sm);
+  }
+
+  .form-container button[type="submit"] {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
 }

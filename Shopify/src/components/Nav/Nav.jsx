@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Nav.css';
 
 export default function Nav({ onLogout, user }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State to toggle menu visibility
   const userData = user || {};
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen); // Toggle the menu state
+  };
 
   return (
     <nav className="nav-bar">
       <div className="nav-container">
         <div className="nav-brand">Shopify</div>
-        <div className="nav-links">
+        <button
+          className="mobile-menu-btn"
+          onClick={toggleMenu} // Toggle mobile menu visibility
+        >
+          ☰ {/* Hamburger icon */}
+        </button>
+        <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
           <NavLink to="/home" className={({ isActive }) => isActive ? 'active' : ''}>
             Home
           </NavLink>

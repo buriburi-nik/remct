@@ -187,4 +187,59 @@ tr:last-child td {
     align-items: flex-start;
     gap: var(--spacing-md);
   }
-}       
+}       @media screen and (max-width: 768px) {
+  .users-container {
+    padding: var(--spacing-md);
+  }
+
+  .users-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .filter-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: unset;
+    padding-right: 2rem;
+  }
+
+  .users-table-container {
+    padding: var(--spacing-sm);
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  th {
+    font-size: 0.9rem;
+  }
+
+  td {
+    font-size: 0.875rem;
+  }
+
+  .loading {
+    min-height: 300px;
+  }
+
+  .empty-state-icon {
+    font-size: 2.5rem;
+  }
+}
