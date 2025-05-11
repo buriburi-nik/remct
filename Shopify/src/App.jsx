@@ -18,7 +18,6 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check auth on mount and on route change
   useEffect(() => {
     const stored = localStorage.getItem('user');
     if (stored) {
@@ -62,88 +61,16 @@ export default function App() {
       {authenticated && <Nav onLogout={handleLogout} user={user} />}
 
       <Routes>
-        <Route
-          path="/"
-          element={
-            authenticated
-              ? <Navigate to="/home" replace />
-              : <Login onLogin={handleLogin} />
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            authenticated
-              ? <Navigate to="/home" replace />
-              : <Signup onSignup={handleLogin} />
-          }
-        />
-
-        <Route
-          path="/home"
-          element={
-            <ProtectedRoute>
-              <Home user={user} />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            <ProtectedRoute>
-              <Products />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/products/:id"
-          element={
-            <ProtectedRoute>
-              <ProductDetails />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/wishlist"
-          element={
-            <ProtectedRoute>
-              <Wishlist />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/users"
-          element={
-            <ProtectedRoute>
-              <Users />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <ProtectedRoute>
-              <ContactUs />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="*"
-          element={
-            authenticated
-              ? <Navigate to="/home" replace />
-              : <Navigate to="/" replace />
-          }
-        />
+        <Route path="/" element={authenticated ? <Navigate to="/home" replace /> : <Login onLogin={handleLogin} />} />
+        <Route path="/signup" element={authenticated ? <Navigate to="/home" replace /> : <Signup onSignup={handleLogin} />} />
+        <Route path="/home" element={<ProtectedRoute><Home user={user} /></ProtectedRoute>} />
+        <Route path="/products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
+        <Route path="/products/:id" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
+        <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+        <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+        <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        <Route path="/contact" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
+        <Route path="*" element={<Navigate to={authenticated ? "/home" : "/"} replace />} />
       </Routes>
     </>
   );

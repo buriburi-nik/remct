@@ -17,19 +17,19 @@ export default function Signup({ onSignup }) {
     } else if (!emailRegex.test(form.email)) {
       e.email = 'Please enter a valid email address';
     }
-    
+
     if (!form.password) {
       e.password = 'Password is required';
     } else if (form.password.length < 6) {
       e.password = 'Password must be at least 6 characters';
     }
-    
+
     if (!form.confirm) {
       e.confirm = 'Please confirm your password';
     } else if (form.confirm !== form.password) {
       e.confirm = 'Passwords must match';
     }
-    
+
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -44,25 +44,35 @@ export default function Signup({ onSignup }) {
   const handleSubmit = e => {
     e.preventDefault();
     if (!validate()) return;
-    
+
     setIsSubmitting(true);
-    
-    // Simulate API call with timeout
+
     setTimeout(() => {
       try {
-        // Store user data in localStorage
-        const userData = {
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+        const existing = users.find(u => u.email === form.email);
+        if (existing) {
+          setErrors({ email: 'Email is already registered' });
+          setIsSubmitting(false);
+          return;
+        }
+
+        const newUser = {
           name: form.name,
           email: form.email,
-          password: form.password
+          password: form.password,
         };
-        
-        localStorage.setItem('user', JSON.stringify(userData));
+
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('user', JSON.stringify({ name: newUser.name, email: newUser.email }));
+
         onSignup();
         navigate('/home');
-      } catch (error) {
-        console.error("Signup error:", error);
-        setErrors({ general: 'An error occurred. Please try again.' });
+      } catch (err) {
+        console.error('Signup error:', err);
+        setErrors({ general: 'Something went wrong. Try again.' });
       }
       setIsSubmitting(false);
     }, 1000);
@@ -86,7 +96,7 @@ export default function Signup({ onSignup }) {
             />
             {errors.name && <div className="error">{errors.name}</div>}
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
             <input
@@ -100,7 +110,7 @@ export default function Signup({ onSignup }) {
             />
             {errors.email && <div className="error">{errors.email}</div>}
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -114,7 +124,7 @@ export default function Signup({ onSignup }) {
             />
             {errors.password && <div className="error">{errors.password}</div>}
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="confirm">Confirm Password</label>
             <input
@@ -128,14 +138,14 @@ export default function Signup({ onSignup }) {
             />
             {errors.confirm && <div className="error">{errors.confirm}</div>}
           </div>
-          
+
           {errors.general && <div className="error">{errors.general}</div>}
-          
+
           <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Creating Account...' : 'Sign Up'}
           </button>
         </form>
-        
+
         <div className="form-footer">
           Already have an account? <Link to="/">Log in</Link>
         </div>

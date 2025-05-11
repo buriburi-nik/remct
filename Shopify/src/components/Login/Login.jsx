@@ -8,7 +8,6 @@ export default function Login({ onLogin }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  // Check if user is already logged in
   useEffect(() => {
     const user = localStorage.getItem('user');
     if (user) {
@@ -19,7 +18,6 @@ export default function Login({ onLogin }) {
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    // Clear error for this field when user starts typing
     if (errors[e.target.name]) {
       setErrors({ ...errors, [e.target.name]: '' });
     }
@@ -36,29 +34,26 @@ export default function Login({ onLogin }) {
   const handleSubmit = e => {
     e.preventDefault();
     if (!validate()) return;
-    
+
     setIsSubmitting(true);
-    
-    // Simulate API call with timeout
+
     setTimeout(() => {
       try {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-          const parsed = JSON.parse(storedUser);
-          if (form.email === parsed.email && form.password === parsed.password) {
-            // Valid login
-            onLogin();
-            navigate('/home');
-          } else {
-            setErrors({ auth: 'Invalid email or password' });
-          }
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const matched = users.find(u => u.email === form.email && u.password === form.password);
+
+        if (matched) {
+          localStorage.setItem('user', JSON.stringify({ name: matched.name, email: matched.email }));
+          onLogin();
+          navigate('/home');
         } else {
-          setErrors({ auth: 'No account found. Please sign up.' });
+          setErrors({ auth: 'Invalid email or password' });
         }
-      } catch (error) {
-        console.error("Login error:", error);
-        setErrors({ auth: 'An error occurred. Please try again.' });
+      } catch (err) {
+        console.error('Login error:', err);
+        setErrors({ auth: 'Something went wrong. Try again.' });
       }
+
       setIsSubmitting(false);
     }, 1000);
   };
@@ -81,7 +76,7 @@ export default function Login({ onLogin }) {
             />
             {errors.email && <div className="error">{errors.email}</div>}
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -95,14 +90,14 @@ export default function Login({ onLogin }) {
             />
             {errors.password && <div className="error">{errors.password}</div>}
           </div>
-          
+
           {errors.auth && <div className="error">{errors.auth}</div>}
-          
+
           <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Logging in...' : 'Log In'}
           </button>
         </form>
-        
+
         <div className="form-footer">
           Don't have an account? <Link to="/signup">Sign up</Link>
         </div>
