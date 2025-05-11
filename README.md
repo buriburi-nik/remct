@@ -25,7 +25,7 @@ A full-featured e-commerce application built with React, featuring product brows
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/buriburi-nik/remct/tree/main/Shopify.git
+git clone https://github.com/buriburi-nik/remct.git
 cd shopify
 ```
 
