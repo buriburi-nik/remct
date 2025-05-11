@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Users.css';
 
 export default function Users() {
   const [users, setUsers] = useState([]);

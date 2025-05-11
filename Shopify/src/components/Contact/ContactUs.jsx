@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; import './ContactUs.css';
 
 export default function ContactUs() {
   const [form, setForm] = useState({

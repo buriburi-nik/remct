@@ -1,6 +1,6 @@
-// src/components/ProductDetails.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import './ProductDetails.css';
 
 const CART_KEY = 'cart';
 const WISHLIST_KEY = 'wishlist';

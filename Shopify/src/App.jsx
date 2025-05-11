@@ -4,12 +4,12 @@ import Nav from './components/Nav/Nav.jsx';
 import Login from './components/Login/Login.jsx';
 import Signup from './components/Signup/Signup.jsx';
 import Home from './components/Home/Home.jsx';
-import Products from './components/Products';
-import ProductDetails from './components/ProductDetails';
-import Cart from './components/Cart';
-import Wishlist from './components/Wishlist';
-import Users from './components/Users';
-import ContactUs from './components/ContactUs';
+import Products from './components/Products/Products.jsx';
+import ProductDetails from './components/ProductDetails/ProductDetails.jsx';
+import Cart from './components/Cart/Cart.jsx';
+import Wishlist from './components/Wishlist/Wishlist.jsx';
+import Users from './components/user/Users.jsx';
+import ContactUs from './components/Contact/ContactUs.jsx';
 
 export default function App() {
   const [authenticated, setAuthenticated] = useState(false);

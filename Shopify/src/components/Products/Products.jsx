@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import './Products.css';
 
 export default function Products() {
   const [categories, setCategories] = useState([]);
