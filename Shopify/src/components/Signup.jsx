@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Signup({ onSignup }) {
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const validate = () => {
     const e = {};
@@ -18,39 +21,100 @@ export default function Signup({ onSignup }) {
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: '' });
+    if (errors[e.target.name]) {
+      setErrors({ ...errors, [e.target.name]: '' });
+    }
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     if (!validate()) return;
-    localStorage.setItem('user', JSON.stringify({
-      name: form.name,
-      email: form.email,
-      password: form.password
-    }));
-    onSignup();
+    
+    setIsSubmitting(true);
+    
+    // Simulate API call with timeout
+    setTimeout(() => {
+      localStorage.setItem('user', JSON.stringify({
+        name: form.name,
+        email: form.email,
+        password: form.password
+      }));
+      onSignup();
+      navigate('/home');
+      setIsSubmitting(false);
+    }, 1000);
   };
 
   return (
-    <div className="form-container">
-      <h2>Create Account</h2>
-      <form onSubmit={handleSubmit} noValidate>
-        {['name','email','password','confirm'].map(key => (
-          <div key={key}>
+    <div className="container">
+      <div className="form-container">
+        <h2>Create Account</h2>
+        <form onSubmit={handleSubmit} noValidate>
+          <div className="form-group">
+            <label htmlFor="name">Full Name</label>
             <input
-              name={key}
-              type={key.includes('password') ? 'password' : 'text'}
-              placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
-              value={form[key]}
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Enter your name"
+              value={form.name}
               onChange={handleChange}
+              disabled={isSubmitting}
             />
-            {errors[key] && <small className="error">{errors[key]}</small>}
+            {errors.name && <div className="error">{errors.name}</div>}
           </div>
-        ))}
-        <button type="submit">Sign Up</button>
-        <p>No account? <Link to="/">Login here</Link></p>
-      </form>
+          
+          <div className="form-group">
+            <label htmlFor="email">Email Address</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              value={form.email}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
+            {errors.email && <div className="error">{errors.email}</div>}
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="At least 6 characters"
+              value={form.password}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
+            {errors.password && <div className="error">{errors.password}</div>}
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="confirm">Confirm Password</label>
+            <input
+              id="confirm"
+              name="confirm"
+              type="password"
+              placeholder="Re-enter password"
+              value={form.confirm}
+              onChange={handleChange}
+              disabled={isSubmitting}
+            />
+            {errors.confirm && <div className="error">{errors.confirm}</div>}
+          </div>
+          
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Creating Account...' : 'Sign Up'}
+          </button>
+        </form>
+        
+        <div className="form-footer">
+          Already have an account? <Link to="/">Log in</Link>
+        </div>
+      </div>
     </div>
   );
 }

@@ -33,11 +33,11 @@ export default function ProductDetails() {
   }
 
   function renderStars(rating) {
-    if (!rating) return null;
+    if (!rating || !rating.rate) return null;
     
     const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
+    const fullStars = Math.floor(rating.rate);
+    const hasHalfStar = rating.rate % 1 >= 0.5;
     
     for (let i = 0; i < fullStars; i++) {
       stars.push(<span key={`full-${i}`}>★</span>);
@@ -81,7 +81,7 @@ export default function ProductDetails() {
             <div className="empty-state-icon">❌</div>
             <h3>Product not found</h3>
             <p>{error || 'The requested product could not be loaded'}</p>
-            <button onClick={handleGoBack} className="btn btn-primary mt-4">
+            <button onClick={handleGoBack} className="btn btn-primary">
               Go Back
             </button>
           </div>
@@ -93,7 +93,7 @@ export default function ProductDetails() {
   return (
     <div className="container">
       <div className="content-area product-details">
-        <button onClick={handleGoBack} className="btn btn-secondary mb-4">
+        <button onClick={handleGoBack} className="btn btn-secondary">
           ← Back to Products
         </button>
         

@@ -1,14 +1,17 @@
-// src/main.jsx
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import './App.css';  // your global styles
+import App from './App';
+import './index.css';
+import './App.css';  // Import our custom styles
 
 const container = document.getElementById('root');
 const root = createRoot(container);
+
 root.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>
 );

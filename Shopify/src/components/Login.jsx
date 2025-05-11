@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login({ onLogin }) {
   const [form, setForm] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      onLogin();
+      navigate('/home');
+    }
+  }, [onLogin, navigate]);
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -30,13 +40,19 @@ export default function Login({ onLogin }) {
     
     // Simulate API call with timeout
     setTimeout(() => {
-      const stored = JSON.parse(localStorage.getItem('user') || '{}');
-      if (form.email === stored.email && form.password === stored.password) {
-        onLogin();
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const stored = JSON.parse(storedUser);
+        if (form.email === stored.email && form.password === stored.password) {
+          onLogin();
+          navigate('/home');
+        } else {
+          setErrors({ auth: 'Invalid email or password' });
+        }
       } else {
-        setErrors({ auth: 'Invalid email or password' });
-        setIsSubmitting(false);
+        setErrors({ auth: 'No account found. Please sign up.' });
       }
+      setIsSubmitting(false);
     }, 1000);
   };
 
@@ -73,7 +89,7 @@ export default function Login({ onLogin }) {
             {errors.password && <div className="error">{errors.password}</div>}
           </div>
           
-          {errors.auth && <div className="error mb-2">{errors.auth}</div>}
+          {errors.auth && <div className="error">{errors.auth}</div>}
           
           <button type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Logging in...' : 'Log In'}
