@@ -2,9 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 export default function Nav({ onLogout, user }) {
-  // Make sure we have a user object, even if it's empty
   const userData = user || {};
-  
+
   return (
     <nav className="nav-bar">
       <div className="nav-container">
@@ -15,6 +14,12 @@ export default function Nav({ onLogout, user }) {
           </NavLink>
           <NavLink to="/products" className={({ isActive }) => isActive ? 'active' : ''}>
             Products
+          </NavLink>
+          <NavLink to="/cart" className={({ isActive }) => isActive ? 'active' : ''}>
+            Cart
+          </NavLink>
+          <NavLink to="/wishlist" className={({ isActive }) => isActive ? 'active' : ''}>
+            Wishlist
           </NavLink>
           <NavLink to="/users" className={({ isActive }) => isActive ? 'active' : ''}>
             Users

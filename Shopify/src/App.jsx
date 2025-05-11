@@ -6,6 +6,8 @@ import Signup from './components/Signup';
 import Home from './components/Home';
 import Products from './components/Products';
 import ProductDetails from './components/ProductDetails';
+import Cart from './components/Cart';
+import Wishlist from './components/Wishlist';
 import Users from './components/Users';
 import ContactUs from './components/ContactUs';
 
@@ -16,35 +18,27 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check authentication status on component mount and route changes
+  // Check auth on mount and on route change
   useEffect(() => {
-    const checkAuth = () => {
+    const stored = localStorage.getItem('user');
+    if (stored) {
       try {
-        const userData = localStorage.getItem('user');
-        if (userData) {
-          const parsedUser = JSON.parse(userData);
-          setUser(parsedUser);
-          setAuthenticated(true);
-        } else {
-          setUser(null);
-          setAuthenticated(false);
-        }
-      } catch (error) {
-        console.error("Auth check error:", error);
-        setUser(null);
-        setAuthenticated(false);
+        const parsed = JSON.parse(stored);
+        setUser(parsed);
+        setAuthenticated(true);
+      } catch {
+        localStorage.removeItem('user');
       }
-      setLoading(false);
-    };
-
-    checkAuth();
+    } else {
+      setUser(null);
+      setAuthenticated(false);
+    }
+    setLoading(false);
   }, [location.pathname]);
 
   const handleLogin = () => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      setUser(JSON.parse(userData));
-    }
+    const stored = JSON.parse(localStorage.getItem('user'));
+    setUser(stored);
     setAuthenticated(true);
     navigate('/home');
   };
@@ -56,69 +50,100 @@ export default function App() {
     navigate('/');
   };
 
-  // Protected route component
   const ProtectedRoute = ({ children }) => {
     if (loading) {
-      return (
-        <div className="loading">
-          <div className="loading-spinner"></div>
-          <p>Loading...</p>
-        </div>
-      );
+      return <div className="loading"><p>Loading…</p></div>;
     }
-    
     return authenticated ? children : <Navigate to="/" replace />;
   };
 
   return (
     <>
       {authenticated && <Nav onLogout={handleLogout} user={user} />}
-      
-      <Routes>
-        <Route path="/" element={
-          authenticated ? <Navigate to="/home" replace /> : <Login onLogin={handleLogin} />
-        } />
-        
-        <Route path="/signup" element={
-          authenticated ? <Navigate to="/home" replace /> : <Signup onSignup={handleLogin} />
-        } />
 
-        <Route path="/home" element={
-          <ProtectedRoute>
-            <Home user={user} />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/products" element={
-          <ProtectedRoute>
-            <Products />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/products/:id" element={
-          <ProtectedRoute>
-            <ProductDetails />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/users" element={
-          <ProtectedRoute>
-            <Users />
-          </ProtectedRoute>
-        } />
-        
-        <Route path="/contact" element={
-          <ProtectedRoute>
-            <ContactUs />
-          </ProtectedRoute>
-        } />
-        
-        {/* Catch all route - redirects to home if authenticated, login if not */}
-        <Route path="*" element={
-          authenticated 
-            ? <Navigate to="/home" replace /> 
-            : <Navigate to="/" replace />
-        } />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            authenticated
+              ? <Navigate to="/home" replace />
+              : <Login onLogin={handleLogin} />
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            authenticated
+              ? <Navigate to="/home" replace />
+              : <Signup onSignup={handleLogin} />
+          }
+        />
+
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home user={user} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/products/:id"
+          element={
+            <ProtectedRoute>
+              <ProductDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <ProtectedRoute>
+              <Wishlist />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <Users />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <ProtectedRoute>
+              <ContactUs />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="*"
+          element={
+            authenticated
+              ? <Navigate to="/home" replace />
+              : <Navigate to="/" replace />
+          }
+        />
       </Routes>
     </>
   );
